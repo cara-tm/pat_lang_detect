@@ -1,6 +1,6 @@
 h1. pat_lang_detect
 
-Simple browser vistor preference language detection for redirect and other utilities
+Textpattern CMS plugin: Simple browser vistor preference language detection for redirect and other utilities.
 
 h2. pat_lang_detect
 
