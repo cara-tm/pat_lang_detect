@@ -9,7 +9,8 @@ This plugin intents to help for multi languages websites support. Detects the la
 h3. Usage
 
 Place this tag into your @default@ page template but nothing other else:
-bq. &lt;txp:pat_lang_detect /&gt;
+
+* @<txp:pat_lang_detect />@
 
 And... _Voilà!_
 
@@ -21,11 +22,11 @@ h4. Attribute
 
 h3. pat_lang_meta_href
 
-This tag, without any attributes, is dedicated to your @&lt;head&gt;@ document part in order to add the alternate link to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
+This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
 
 h3. TXP variable
 
-The plugin also creates a TXP variable named @&lt;txp:variable name="visitor_lang" /&gt;@ which contains the locale code country of your visitors and available for any conveniences.
+The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country of your visitors and available for any conveniences.
 
 h3. Histoy and Changelog
 
