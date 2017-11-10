@@ -19,6 +19,7 @@ And... _Voilà!_
 h4. Attribute
 
 * @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation).
+* @display@ (boolean): set to true (i.e. @1@) returns link URL. Default @false@ do not returns anything).
 
 h3. pat_lang_meta_href
 
