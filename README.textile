@@ -19,11 +19,17 @@ And... _Voilà!_
 h4. Attribute
 
 * @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation).
-* @display@ (boolean): set to true (i.e. @1@) returns link URL. Default @false@ do not returns anything).
+* @display@ (boolean): set to true (i.e. @1@) returns link URL. Default @false@ (do not returns anything).
 
 h3. pat_lang_meta_href
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
+
+e.g.
+    <link rel="alternate" hreflang="x-default" href="http://example.com/en">
+    <link rel="alternate" hreflang="fr" href="http://example.com/fr">
+
+Note: "x-default" if a section is found same as the website default active language in the languages préférences.
 
 h3. TXP variable
 
