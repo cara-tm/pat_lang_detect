@@ -68,7 +68,8 @@ function pat_lang_detect($atts, $thing='')
  */
 function _pat_lang_detect_section_name($code)
 {
-
+	global $DB;
+	$DB = new DB;
 	$rs = safe_row('name', 'txp_section', "name = '".doSlash($code)."'");
 
 	if ($rs)
