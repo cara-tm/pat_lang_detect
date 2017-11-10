@@ -6,7 +6,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.0
+ * @version: 0.1.1
  * @license: GPLv2
  */
 
@@ -33,7 +33,8 @@ function pat_lang_detect($atts, $thing='')
 	global $variable;
 
 	extract(lAtts(array(
-		'redirect'  => false
+		'redirect'  => false,
+		'display'   => false,
 	), $atts));
 
 	$langs = explode(",", @$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
@@ -51,7 +52,7 @@ function pat_lang_detect($atts, $thing='')
 
 	// Redirection to locale page or not; otherwise display only the URL
 	if (true != $redirect) {
-		return hu._pat_lang_detect_section_name($variable['visitor_lang']);
+		return $display ? hu._pat_lang_detect_section_name($variable['visitor_lang']) : '';
 	} else {
 		header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_lang']));
 	}
