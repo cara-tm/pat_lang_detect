@@ -26,10 +26,11 @@ h3. pat_lang_meta_href
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
 
 e.g.
-    <link rel="alternate" hreflang="x-default" href="http://example.com/en">
-    <link rel="alternate" hreflang="fr" href="http://example.com/fr">
 
-Note: "x-default" if a section is found same as the website default active language in the languages préférences.
+bq. &lt;link rel="alternate" hreflang="x-default" href="http://example.com/en"&gt;
+&lt;link rel="alternate" hreflang="fr" href="http://example.com/fr"&gt;
+
+Note: @x-default@ value if a section is found same as the website default active language sets in the languages préférences.
 
 h3. TXP variable
 
