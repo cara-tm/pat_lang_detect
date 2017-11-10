@@ -14,7 +14,7 @@ Place this tag into your @default@ page template but nothing other else:
 
 And... _Voilà!_
 
-*Note*: You need to put your home page template into each pages associated with a locale code (ISO2).
+*Note*: You need to put your home page template translated into each pages associated with a locale code (ISO2).
 
 h4. Attribute
 
