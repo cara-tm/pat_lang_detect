@@ -1,3 +1,4 @@
+<?php
 /**
  * Simple browser language detection for section redirect (simple multilinguage support)
  * Created for the "FOTO" theme
