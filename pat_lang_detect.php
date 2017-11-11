@@ -89,14 +89,22 @@ function _pat_lang_detect_section_name($code)
 function pat_lang_meta_href()
 {
 
+	// ISO2 lang prefs
 	$current = substr(get_pref('language'), 0, 2);
 	$out = '';
 
+	// Query for section names
 	$data = safe_rows('name', 'txp_section', "1=1");
 
-	if ( custom_field(array('name' => 'Twin_ID')) && strlen(section(array())) == 2 )
-		$out = '<link rel="alternate" hreflang="'.section(array()).'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n;
+	// Is there a 'Twin_ID' custom_field for this individual article?
+	if ( custom_field(array('name' => 'Twin_ID')) ) {
+		// Keeps only section name from the permlink
+		preg_match('/\/([a-z]{2})\//', permlink(array('id' => custom_field(array('name' => 'Twin_ID')))), $m);
+		// Retrieves the alternate link with the ISO2 section name
+		$out = strlen($m[1] == 2) ? '<link rel="alternate" hreflang="'.$m[1].'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n : '';
+	}
 
+	// Loop for locale sections
 	foreach ($data as $value) {
 
 		if ($value['name'] == $current) 
