@@ -32,6 +32,8 @@ bq. &lt;txp:pat_lang_detect /&gt;
     &lt;p&gt;This website is also available in your language: &lt;a href="&lt;txp:pat_lang_detect display="1" /&gt;"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;/txp:if_variable&gt;
 
+For further infos, "see here too":https://github.com/cara-tm/pat_text#advice.
+
 h3. pat_lang_meta_href
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
