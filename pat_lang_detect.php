@@ -6,7 +6,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.1
+ * @version: 0.1.2
  * @license: GPLv2
  */
 
@@ -93,6 +93,9 @@ function pat_lang_meta_href()
 	$out = '';
 
 	$data = safe_rows('name', 'txp_section', "1=1");
+
+	if ( custom_field(array('name' => 'Twin_ID')) && strlen(section(array())) == 2 )
+		$out = '<link rel="alternate" hreflang="'.section(array()).'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n;
 
 	foreach ($data as $value) {
 
