@@ -6,7 +6,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.2
+ * @version: 0.1.3
  * @license: GPLv2
  */
 
@@ -102,16 +102,17 @@ function pat_lang_meta_href()
 		preg_match('/\/([a-z]{2})\//', permlink(array('id' => custom_field(array('name' => 'Twin_ID')))), $m);
 		// Retrieves the alternate link with the ISO2 section name
 		$out = $m[1] ? '<link rel="alternate" hreflang="'.$m[1].'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n : '';
-	}
+		// And the current one
+		$out .= '<link rel="x-default" hreflang="'.$current.'" href="'.permlink(array()).'">'.n;
+	} else {
+		// Loop for locale sections
+		foreach ($data as $value) {
+			if ($value['name'] == $current) 
+				$out .= '<link rel="alternate" hreflang="x-default" href="'.hu.$current.'">'.n;
 
-	// Loop for locale sections
-	foreach ($data as $value) {
-
-		if ($value['name'] == $current) 
-			$out .= '<link rel="alternate" hreflang="x-default" href="'.hu.$current.'">'.n;
-
-		if (strlen($value['name']) == 2 && $value['name'] != $current)
-			$out .= '<link rel="alternate" hreflang="'.$value['name'].'" href="'.hu.$value['name'].'">'.n;
+			if (strlen($value['name']) == 2 && $value['name'] != $current)
+				$out .= '<link rel="alternate" hreflang="'.$value['name'].'" href="'.hu.$value['name'].'">'.n;
+		}
 
 	}
 
