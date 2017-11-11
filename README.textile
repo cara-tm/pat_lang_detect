@@ -29,7 +29,7 @@ Redirections can be a problem and/or noticed as a bad practice by performance to
 
 bq. &lt;txp:pat_lang_detect /&gt;
 &lt;txp:if_variable name="visitor_lang" value="en"&gt;
-    &lt;p&gt;This website is also available in your language: &lt;a href="&lt;txp:pat_lang_detect display="1" /&gt;"&gt;here&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;This website is also available in your language: &lt;a rel="alternate" href="&lt;txp:pat_lang_detect display="1" /&gt;"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;/txp:if_variable&gt;
 
 For further infos, "see here too":https://github.com/cara-tm/pat_text#advice.
