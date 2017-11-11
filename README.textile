@@ -25,7 +25,7 @@ The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" 
 
 h3. About redirection
 
-Redirections can be a problem and/or noticed as a bad practice by performance tools. The default "@redirect@" attribute is set to "@false@" for this reason and you could prefer to display a simple locale message for your visitors instead:
+Redirections can be a problem and/or identified as a bad practice by performance tools but without any *noticed* SEO impacts (on Google search engine). The default "@redirect@" attribute is set to "@false@" for this reason and you could prefer to display a simple locale message for your visitors instead:
 
 bq. &lt;txp:pat_lang_detect /&gt;
 &lt;txp:if_variable name="visitor_lang" value="en"&gt;
