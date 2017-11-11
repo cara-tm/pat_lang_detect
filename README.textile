@@ -12,7 +12,7 @@ Place this tag into your @default@ page template but nothing other else:
 
 And... _Voilà!_
 
-*Note*: You need to put your home page template translated into each pages associated with a locale code (ISO2).
+*Note*: You need to put your home page template translated into each pages associated with a locale code (ISO2). For no redirect, "keeping as this your 'Default' page, see below":#about-redirection.
 
 h4. Attribute
 
