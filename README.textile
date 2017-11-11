@@ -16,16 +16,16 @@ And... _Voilà!_
 
 h4. Attribute
 
-* @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation).
+* @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation). Default "@0@" (@false@).
 * @display@ (boolean): set to true (i.e. @1@) returns link URL. Default @false@ (do not returns anything).
 
 h3. TXP variable
 
-The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country of your visitors and available for any conveniences.
+The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country (ISO2) of your visitors and available for any conveniences throught your entire website.
 
 h3. About redirection
 
-Redirections can be a problem and/or noticed as a bad practice by performance tools. The default "@redirect@" attribute is set to "@false@" and you could prefer to display a simple locale message for your visitors instead:
+Redirections can be a problem and/or noticed as a bad practice by performance tools. The default "@redirect@" attribute is set to "@false@" for this reason and you could prefer to display a simple locale message for your visitors instead:
 
 bq. &lt;txp:pat_lang_detect /&gt;
 &lt;txp:if_variable name="visitor_lang" value="en"&gt;
