@@ -101,7 +101,7 @@ function pat_lang_meta_href()
 		// Keeps only section name from the permlink
 		preg_match('/\/([a-z]{2})\//', permlink(array('id' => custom_field(array('name' => 'Twin_ID')))), $m);
 		// Retrieves the alternate link with the ISO2 section name
-		$out = strlen($m[1] == 2) ? '<link rel="alternate" hreflang="'.$m[1].'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n : '';
+		$out = $m[1] ? '<link rel="alternate" hreflang="'.$m[1].'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n : '';
 	}
 
 	// Loop for locale sections
