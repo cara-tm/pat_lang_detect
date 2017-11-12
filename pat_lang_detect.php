@@ -97,7 +97,7 @@ function pat_lang_meta_href()
 	$data = safe_rows('name', 'txp_section', "1=1");
 
 	// Is there a 'Twin_ID' custom_field for this individual article?
-	if ( custom_field(array('name' => 'Twin_ID')) ) {
+	if ( custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID'))!= article_id(array()) ) {
 		// Keeps only section name from the permlink
 		preg_match('/\/([a-z]{2})\//', permlink(array('id' => custom_field(array('name' => 'Twin_ID')))), $m);
 		// Retrieves the alternate link with the ISO2 section name
