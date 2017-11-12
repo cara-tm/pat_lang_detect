@@ -45,6 +45,10 @@ bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.co
 
 Note: @x-default@ value if a section is found same as the website default active language sets in the languages préférences. Best place to add in your "Default" page template. Just because this plugin can't find all corresponding translated sections of your website. Nevermind, Google will understand your website structure from your home page. -If you want a in deep SEO organisation, you will need to create a conditional individual article loop maybe with the help of a @custom_field@ to store the @#ID@ identifer of the corresponding translated article in order to generate manualy an alternate href link-. Version 0.1.2. introduices a way, see below.
 
+In your *inner pages* (others than the _home_ one), best use is to wrap the plugin tag with if_individual_article:
+
+bq. &lt;txp:if_individual_article&gt;&lt;txp:pat_lang_meta_href /&gt;&lt;/txp:if_individual_article&gt;
+
 h2. Custom field
 
 For individual alternate href links, use a custom field named @Twin_ID@ to store the ID of the corresponding translated article. The alternate links will be generated automaticaly in an individual article context.
