@@ -98,13 +98,16 @@ function pat_lang_meta_href()
 
 	// Is there a 'Twin_ID' custom_field for this individual article?
 	if ( custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID'))!= article_id(array()) ) {
+
 		// Keeps only section name from the permlink
 		preg_match('/\/([a-z]{2})\//', permlink(array('id' => custom_field(array('name' => 'Twin_ID')))), $m);
 		// Retrieves the alternate link with the ISO2 section name
 		$out = $m[1] ? '<link rel="alternate" hreflang="'.$m[1].'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n : '';
 		// And the current one
 		$out .= '<link rel="x-default" hreflang="'.$current.'" href="'.permlink(array()).'">'.n;
-	} else {
+
+	} elseif (true != custom_field(array('name' => 'Twin_ID')) ) {
+
 		// Loop for locale sections
 		foreach ($data as $value) {
 			if ($value['name'] == $current) 
