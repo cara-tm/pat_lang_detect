@@ -1,12 +1,10 @@
-<?php
 /**
- * Simple browser language detection for section redirect (simple multilinguage support)
- * Created for the "FOTO" theme
+ * Simple browser vistor preference language detection for redirect and others utilities
  *
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.4
+ * @version: 0.1.5
  * @license: GPLv2
  */
 
@@ -28,7 +26,7 @@ if (class_exists('\Textpattern\Tag\Registry')) {
  * @param
  * @return string
  */
-function pat_lang_detect($atts, $thing='')
+function pat_lang_detect($atts)
 {
 	global $variable;
 
@@ -88,37 +86,46 @@ function _pat_lang_detect_section_name($code)
  */
 function pat_lang_meta_href()
 {
+	global $pretext;
+	$out = '';
 
 	// ISO2 lang prefs
 	$current = substr(get_pref('language'), 0, 2);
-	$out = '';
-
-	// Query for section names
+	// Query: get all section names
 	$data = safe_rows('name', 'txp_section', "1=1");
 
-	// Is there a 'Twin_ID' custom_field for this individual article?
-	if ( custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID'))!= article_id(array()) ) {
-
-		// Keeps only section name from the permlink
-		preg_match('/\/([a-z]{2})\//', permlink(array('id' => custom_field(array('name' => 'Twin_ID')))), $m);
-		// Retrieves the alternate link with the ISO2 section name
-		$out = $m[1] ? '<link rel="alternate" hreflang="'.$m[1].'" href="'.permlink(array('id' => custom_field(array('name' => 'Twin_ID')))).'">'.n : '';
-		// And the current one
-		$out .= '<link rel="x-default" hreflang="'.$current.'" href="'.permlink(array()).'">'.n;
-
-	} elseif (true != custom_field(array('name' => 'Twin_ID')) ) {
-
+	if ( $pretext['s'] == 'default' ) {
+		$out = '<link rel="x-default" hreflang="'.$current.'" href="'.hu.'">'.n;
 		// Loop for locale sections
 		foreach ($data as $value) {
-			if ($value['name'] == $current) 
-				$out .= '<link rel="alternate" hreflang="x-default" href="'.hu.$current.'">'.n;
-
 			if (strlen($value['name']) == 2 && $value['name'] != $current)
-				$out .= '<link rel="alternate" hreflang="'.$value['name'].'" href="'.hu.$value['name'].'">'.n;
+				$out .= '<link rel="alternate" hreflang="'.$value['name'].'" href="'.pagelinkurl(array('s' => $value['name'])).'">'.n;	
 		}
-
+	} else {
+		// Is there a 'Twin_ID' custom_field for this individual article?
+		if ( custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID')) != article_id(array()) ) {
+			// Check all in the comma separated list of IDs
+			$list = explode( ',', custom_field(array('name' => 'Twin_ID')) );
+			foreach($list as $id) {
+				// Retrieves the alternate link with the ISO2 section name
+				$out .= _pat_lang_detect_section_grab( permlink(array('id' => $id)) );
+			}
+		}
 	}
-
 	return $out;
+}
 
+
+function _pat_lang_detect_section_grab($scheme)
+{
+
+	if ($scheme)
+		preg_match('/\/([a-z]{2})\//', $scheme, $m);
+
+	if ($m[1] == substr(get_pref('language'), 0, 2) )
+		$rel = 'x-default';
+	else
+		$rel = 'alternate';
+
+	return '<link rel="'.$rel.'" hreflang="'.$m[1].'" href="'.$scheme.'">'.n;
 }
