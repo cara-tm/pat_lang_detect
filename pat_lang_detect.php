@@ -1,6 +1,7 @@
 /**
  * Simple browser vistor preference language detection for redirect and other utilities
  *
+ * @author   Patrick LEFEVRE - https://github.com/cara-tm/pat_lang_detect
  * @type:    Public
  * @prefs:   no
  * @order:   5
@@ -77,6 +78,7 @@ function _pat_lang_detect_section_name($code)
 
 	return $out;
 }
+
 
 /**
  * Creates link tags for locale alternate URLs
