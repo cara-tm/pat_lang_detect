@@ -1,10 +1,10 @@
 /**
- * Simple browser vistor preference language detection for redirect and others utilities
+ * Simple browser vistor preference language detection for redirect and other utilities
  *
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.5
+ * @version: 0.1.6
  * @license: GPLv2
  */
 
@@ -23,8 +23,8 @@ if (class_exists('\Textpattern\Tag\Registry')) {
  * Detect visitor's browser lang (ISO2) and create a variable to store it.
  * Part of this code based on Robert Wetzlmayr's script.
  *
- * @param
- * @return string
+ * @param  $atts array This plugin attributes
+ * @return string      ISO2 language code
  */
 function pat_lang_detect($atts)
 {
@@ -61,8 +61,8 @@ function pat_lang_detect($atts)
 /**
  * Compares a variable from names stored into the 'section' table
  *
- * @param  $code string
- * @return $code string
+ * @param  $code string ISO2 language code
+ * @return $code string ISO2 language code found in DB
  */
 function _pat_lang_detect_section_name($code)
 {
@@ -105,7 +105,7 @@ function pat_lang_meta_href()
 		// Is there a 'Twin_ID' custom_field for this individual article?
 		if ( custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID')) != article_id(array()) ) {
 			// Check all in the comma separated list of IDs
-			$list = explode( ',', custom_field(array('name' => 'Twin_ID')) );
+			$list = explode( ',', trim(custom_field(array('name' => 'Twin_ID'))) );
 			foreach($list as $id) {
 				// Retrieves the alternate link with the ISO2 section name
 				$out .= _pat_lang_detect_section_grab( permlink(array('id' => $id)) );
@@ -116,6 +116,12 @@ function pat_lang_meta_href()
 }
 
 
+/**
+ * Filter the corresponding sections
+ *
+ * @param $scheme string URL
+ * @return string        HTML link tag
+ */
 function _pat_lang_detect_section_grab($scheme)
 {
 
