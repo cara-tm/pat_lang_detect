@@ -1,5 +1,5 @@
 /**
- * Simple browser vistor preference language detection for redirect and other utilities
+ * Simple browser visitor preference language detection for locale redirects and other utilities
  *
  * @author   Patrick LEFEVRE - https://github.com/cara-tm/pat_lang_detect
  * @type:    Public
@@ -93,6 +93,8 @@ function pat_lang_meta_href()
 
 	// ISO2 lang prefs
 	$current = substr(get_pref('language'), 0, 2);
+	// Loads the main function
+	pat_lang_detect(array('redirect' => 0, 'display' => 0));
 	// Query: get all section names
 	$data = safe_rows('name', 'txp_section', "1=1");
 
