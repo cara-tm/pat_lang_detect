@@ -43,7 +43,7 @@ This plugin *works only* within @section@ into the permlinks preference choice o
 
 h4. Usage
 
-Place this tag into your @<head>@ part of your HTML document:
+Place this tag into the @<head>@ part of your HTML document:
 
 bq. &lt;txp:pat_lang_meta_href /&gt;
 
@@ -55,6 +55,7 @@ bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.co
 &lt;link rel="alternate" hreflang="fr" href="http&#8202;://example.com/fr"&gt;
 
 Note: @x-default@ value if a *default section* is found same as the website default @active language@ sets in the languages preferences.
+Alternative links are displayed in default order as populated into the 'section' table; individual alternative links are displayed in the order of the corresponding article #IDs.
 
 h2. Custom field
 
