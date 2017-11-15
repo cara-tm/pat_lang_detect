@@ -1,6 +1,6 @@
 h1. pat_lang_detect
 
-Textpattern CMS plugin: Simple browser vistor preference language detection for redirect and other utilities.
+Textpattern CMS plugin: Simple browser vistor preference language detection for locale redirects and other utilities.
 
 This plugin intents to help for multi languages websites support. Detects the language preference of the visitors browser, then redirect to the corresponding page named by the two matching letters (eg. @en@) if it exists.
 
@@ -19,7 +19,7 @@ So, create multilingual websites is as simple as to write articles attached to e
 h4. Attribute
 
 * @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation). Default "@0@" (@false@).
-* @display@ (boolean): set to true (i.e. @1@) returns link URL. Default @false@ (do not returns anything).
+* @display@ (boolean): set to true (i.e. @1@) returns locale link URL. Default @false@ (do not returns anything).
 
 h3. TXP variable
 
@@ -34,20 +34,27 @@ bq. &lt;txp:pat_lang_detect /&gt;
     &lt;p&gt;This website is also available in your language: &lt;a rel="alternate" href="&lt;txp:pat_lang_detect display="1" /&gt;"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;/txp:if_variable&gt;
 
-For further infos, "see here too":https://github.com/cara-tm/pat_text#advice.
+For further infos with multiple translated strings support, "see here too":https://github.com/cara-tm/pat_text#advice.
 
 h3. pat_lang_meta_href
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
+This plugin *works only* within @section@ into the permlinks preference choice of your website.
 
-e.g.
+h4. Usage
+
+Place this tag into your @<head>@ part of your HTML document:
+
+bq. &lt;txp:pat_lang_meta_href /&gt;
+
+This tag checks all your locale sections available (named by 2 letters in ISO2 format) and injects all alternate links accordingly, e.g.:
 
 bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.com/en"&gt;
+&lt;link rel="alternate" hreflang="de" href="http&#8202;://example.com/de"&gt;
+&lt;link rel="alternate" hreflang="es" href="http&#8202;://example.com/es"&gt;
 &lt;link rel="alternate" hreflang="fr" href="http&#8202;://example.com/fr"&gt;
 
-Note: @x-default@ value if a section is found same as the website default active language sets in the languages préférences. Best place to add in your "Default" page template. Just because this plugin can't find all corresponding translated sections of your website. Nevermind, Google will understand your website structure from your home page. -If you want a in deep SEO organisation, you will need to create a conditional individual article loop maybe with the help of a @custom_field@ to store the @#ID@ identifer of the corresponding translated article in order to generate manualy an alternate href link-. Version 0.1.2. introduices a way, see below.
-
-This plugin *works only* with @section@ into the permlink preference.
+Note: @x-default@ value if a *default section* is found same as the website default @active language@ sets in the languages préférences.
 
 h2. Custom field
 
@@ -57,6 +64,7 @@ h3. Histoy and Changelog
 
 Plugin created for the "FOTO" prenium TXP theme.
 
+* 15 ^th^November 2017. v. 0.1.7.
 * 14 ^th^ November 2017. v 0.1.6.
 * 13 ^th^ November 2017. v 0.1.5.
 * 12 ^th^ November 2017. v 0.1.3. & v 0.1.4.
