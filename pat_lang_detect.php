@@ -5,7 +5,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.6
+ * @version: 0.1.7
  * @license: GPLv2
  */
 
@@ -88,7 +88,7 @@ function _pat_lang_detect_section_name($code)
  */
 function pat_lang_meta_href()
 {
-	global $pretext;
+	global $pretext, $is_article_list;
 	$out = '';
 
 	// ISO2 lang prefs
@@ -96,7 +96,7 @@ function pat_lang_meta_href()
 	// Query: get all section names
 	$data = safe_rows('name', 'txp_section', "1=1");
 
-	if ( $pretext['s'] == 'default' ) {
+	if ( $pretext['s'] == 'default' || (strlen($pretext['s']) == 2 && false != $is_article_list) ) {
 		$out = '<link rel="x-default" hreflang="'.$current.'" href="'.hu.'">'.n;
 		// Loop for locale sections
 		foreach ($data as $value) {
