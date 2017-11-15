@@ -47,9 +47,9 @@ Place this tag into your @<head>@ part of your HTML document:
 
 bq. &lt;txp:pat_lang_meta_href /&gt;
 
-This tag checks all your locale sections available (named by 2 letters in ISO2 format) and injects all alternate links accordingly, e.g.:
+This tag checks all your locale sections available (named by 2 letters in ISO2 format) and injects all alternate links accordingly, e.g. (this case for an english site):
 
-bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.com/en"&gt;
+bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.com/"&gt;
 &lt;link rel="alternate" hreflang="de" href="http&#8202;://example.com/de"&gt;
 &lt;link rel="alternate" hreflang="es" href="http&#8202;://example.com/es"&gt;
 &lt;link rel="alternate" hreflang="fr" href="http&#8202;://example.com/fr"&gt;
