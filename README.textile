@@ -39,7 +39,7 @@ For further infos with multiple translated strings support, "see here too":https
 h3. pat_lang_meta_href
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
-This plugin *works only* within @section@ into the permlinks preference choice of your website.
+This plugin *works only* within @section@ into the permlinks preference choice of your website (i.e.: @section/id/title@ or @section/title@ permlinks format).
 
 h4. Usage
 
