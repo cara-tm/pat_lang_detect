@@ -54,7 +54,7 @@ bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.co
 &lt;link rel="alternate" hreflang="es" href="http&#8202;://example.com/es"&gt;
 &lt;link rel="alternate" hreflang="fr" href="http&#8202;://example.com/fr"&gt;
 
-Note: @x-default@ value if a *default section* is found same as the website default @active language@ sets in the languages préférences.
+Note: @x-default@ value if a *default section* is found same as the website default @active language@ sets in the languages preferences.
 
 h2. Custom field
 
