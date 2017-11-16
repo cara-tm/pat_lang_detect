@@ -60,7 +60,7 @@ function pat_lang_detect($atts)
 
 
 /**
- * Compares a variable from names stored into the 'section' table
+ * Compares a variable from names stored into the 'txp_section' table
  *
  * @param  $code string ISO2 language code
  * @return $code string ISO2 language code found in DB
@@ -128,7 +128,6 @@ function pat_lang_meta_href()
  */
 function _pat_lang_detect_section_grab($scheme)
 {
-
 	if ($scheme)
 		preg_match('%\/([a-z]{2})\/%', $scheme, $m);
 
