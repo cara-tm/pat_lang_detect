@@ -130,7 +130,7 @@ function _pat_lang_detect_section_grab($scheme)
 {
 
 	if ($scheme)
-		preg_match('/\/([a-z]{2})\//', $scheme, $m);
+		preg_match('%\/([a-z]{2})\/%', $scheme, $m);
 
 	if ($m[1] == substr(get_pref('language'), 0, 2) )
 		$rel = 'x-default';
