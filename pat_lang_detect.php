@@ -5,7 +5,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.7
+ * @version: 0.1.8
  * @license: GPLv2
  */
 
@@ -17,6 +17,13 @@ if (class_exists('\Textpattern\Tag\Registry')) {
 	Txp::get('\Textpattern\Tag\Registry')
 		->register('pat_lang_detect')
 		->register('pat_lang_meta_href');
+}
+
+
+if (txpinterface == 'admin')
+{
+	register_callback('pat_lang_detect_prefs', 'prefs', '', 1);
+	register_callback('pat_lang_detect_cleanup', 'plugin_lifecycle.pat_lang_detect', 'deleted');
 }
 
 
@@ -137,4 +144,23 @@ function _pat_lang_detect_section_grab($scheme)
 		$rel = 'alternate';
 
 	return '<link rel="'.$rel.'" hreflang="'.$m[1].'" href="'.$scheme.'">'.n;
+}
+
+
+function pat_lang_detect_prefs()
+{
+	global $textarray;
+
+	$textarray['pat_lang_detect_enable'] = 'Enable pat_lang_detect?';
+
+	if (!safe_field ('name', 'txp_prefs', "name='pat_lang_detect_enable'"))
+	{
+		safe_insert('txp_prefs', "name='pat_lang_detect_enable', val='0', type=1, event='admin', html='yesnoradio', position=30");
+	}
+}
+
+
+function pat_lang_detect_cleanup()
+{
+	safe_delete('txp_prefs', "name='pat_lang_detect_enable'");
 }
