@@ -6,7 +6,7 @@ This plugin intents to help for multi languages websites support. Detects the la
 
 h3. Usage
 
-Place this tag into your @default@ page template but nothing other else:
+After installation, activate this plugin into your preferences by ticking the "Enable pat_lang_detect?" field. Then, place this tag into your @default@ page template but nothing other else:
 
 * @<txp:pat_lang_detect redirect="1" />@
 
@@ -65,6 +65,7 @@ h3. Histoy and Changelog
 
 Plugin created for the "FOTO" prenium TXP theme.
 
+* 16 ^th^ November 2017. v 0.1.8.
 * 15 ^th^ November 2017. v. 0.1.7.
 * 14 ^th^ November 2017. v 0.1.6.
 * 13 ^th^ November 2017. v 0.1.5.
