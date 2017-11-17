@@ -36,6 +36,8 @@ bq. &lt;txp:pat_lang_detect /&gt;
 
 For further infos with multiple translated strings support, "see here too":https://github.com/cara-tm/pat_text#advice.
 
+!https://raw.githubusercontent.com/cara-tm/pat_lang_detect/master/pat_lang_detect.png!
+
 h3. pat_lang_meta_href
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
