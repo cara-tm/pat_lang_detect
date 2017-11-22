@@ -5,7 +5,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.8
+ * @version: 0.1.9
  * @license: GPLv2
  */
 
@@ -16,6 +16,7 @@
 if (class_exists('\Textpattern\Tag\Registry')) {
 	Txp::get('\Textpattern\Tag\Registry')
 		->register('pat_lang_detect')
+		->register('pat_lang_default')
 		->register('pat_lang_meta_href');
 }
 
@@ -67,6 +68,20 @@ function pat_lang_detect($atts)
 
 
 /**
+ * A simple helper tag to get the ISO2 code of the default TXP language
+ *
+ * @param
+ * @return string ISO2 code
+ */
+function pat_lang_default()
+{
+
+	return substr(get_pref('language'), 0, 2);
+
+}
+
+
+/**
  * Compares a variable from names stored into the 'txp_section' table
  *
  * @param  $code string ISO2 language code
@@ -99,7 +114,7 @@ function pat_lang_meta_href()
 	$out = '';
 
 	// ISO2 lang prefs
-	$current = substr(get_pref('language'), 0, 2);
+	$current = pat_lang_default();
 	// Loads the main function
 	pat_lang_detect(array('redirect' => 0, 'display' => 0));
 	// Query: get all section names
