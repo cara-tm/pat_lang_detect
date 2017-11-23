@@ -31,7 +31,7 @@ h4. Attribute
 * @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation). Default "@0@" (@false@).
 * @display@ (boolean): set to true (i.e. @1@) returns locale link URL. Default @false@ (do not returns anything).
 
-h3. TXP variable
+h3. TXP variable: @<txp:variable name="visitor_lang" />@
 
 The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country (ISO2) of your visitors and available for any conveniences throught your entire website.
 
@@ -51,6 +51,8 @@ bq. &lt;txp:pat_lang_detect /&gt;
 For further infos with multiple translated strings support, "see here too":https://github.com/cara-tm/pat_text#advice.
 
 !https://raw.githubusercontent.com/cara-tm/pat_lang_detect/master/pat_lang_detect.png!
+
+p{width:100%;text-align:right;font-size:small}. _Above: A french website sample_.
 
 h3. @<txp:pat_lang_meta_href />@
 
@@ -73,7 +75,7 @@ bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.co
 Note: @x-default@ value if a *default section* is found same as the website default @active language@ sets in the languages preferences.
 Alternative links are displayed in default order as populated into the 'section' table; individual alternative links are displayed in the order of the corresponding article #IDs.
 
-h2. Custom field
+h2. Custom field: @<txp:custom_field name="Twin_ID" />@
 
 For individual alternate href links, use a custom field named @Twin_ID@ to store a comma separated list of IDs of the corresponding translated articles (the current locale one, included). The alternate links will be generated automaticaly in an individual article context.
  
