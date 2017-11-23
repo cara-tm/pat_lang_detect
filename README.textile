@@ -14,7 +14,7 @@ And... _Voilà!_
 
 So, create multilingual websites is as simple as to write articles attached to each locale sections. 😉
 
-*Note*: You need to put your home page template translated into each pages associated with a locale code (ISO2). For no redirect, "keeping as this your 'Default' page, see below":#about-redirection.
+*Note*: Only *one occurrence* of this tag in your individual pages. You need to put your default home page template translated into each pages associated with a locale code (ISO2). For no redirect, "keeping as this your 'Default' page, see below":#about-redirection.
 
 h4. Attribute
 
