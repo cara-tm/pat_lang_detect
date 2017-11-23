@@ -31,6 +31,13 @@ h4. Attribute
 * @redirect@ (boolean): set to @true@ (i.e. @1@) if you want a redirection to the corresponding locale page; set to @false@ (i.e. @0@) if you want only the URL (maybe for a link creation). Default "@0@" (@false@).
 * @display@ (boolean): set to true (i.e. @1@) returns locale link URL. Default @false@ (do not returns anything).
 
+h4. Language detection overwriting
+
+This plugin sniffs the URLs to detect a @?lang@ query inside. 
+So, you can overwriting the visitor language in your links by a new one into your *current page*, eg.
+
+    http://my-website.com/?lang=fr
+
 h3. TXP variable: @<txp:variable name="visitor_lang" />@
 
 The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country (ISO2) of your visitors and available for any conveniences throught your entire website.
