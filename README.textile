@@ -36,7 +36,7 @@ h4. Language detection overwriting
 This plugin sniffs the URLs to detect a @?lang@ query inside. 
 So, you can overwriting the visitor language in your links by a new one into your *current page*, eg.
 
-    http://my-website.com/?lang=fr
+    @http://my-website.com/?lang=fr@
 
 h3. TXP variable: @<txp:variable name="visitor_lang" />@
 
