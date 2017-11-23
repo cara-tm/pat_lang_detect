@@ -1,4 +1,4 @@
-h1. pat_lang_detect
+h1. @<txp:pat_lang_detect />@
 
 Textpattern CMS plugin: Simple browser vistor preference language detection for locale redirects and other utilities.
 
@@ -14,6 +14,16 @@ And... _Voilà!_
 
 So, create multilingual websites is as simple as to write articles attached to each locale sections. 😉
 
+Your website structural organisation, @section@ names and @page@ templates, eg:
+
+↦ @default@: only one tag inside @<txp:pat_lang_detect redirect="1" />@
+|
+ ↦ @en@: your entire home page template (@markup@) translated in English
+|
+ ↦ @de@: your entire home page template (@markup@) translated in German
+|
+ ↦ @es@: your entire home page template (@markup@) translated in Spanish
+
 *Note*: Only *one occurrence* of this tag in your individual pages. You need to put your default home page template translated into each pages associated with a locale code (ISO2). For no redirect, "keeping as this your 'Default' page, see below":#about-redirection.
 
 h4. Attribute
@@ -24,6 +34,10 @@ h4. Attribute
 h3. TXP variable
 
 The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country (ISO2) of your visitors and available for any conveniences throught your entire website.
+
+h4. @<txp:pat_lang_default />@
+
+This tag without any attributes returns the current TXP active language set in your interface.
 
 h3. About redirection
 
@@ -38,7 +52,7 @@ For further infos with multiple translated strings support, "see here too":https
 
 !https://raw.githubusercontent.com/cara-tm/pat_lang_detect/master/pat_lang_detect.png!
 
-h3. pat_lang_meta_href
+h3. @<txp:pat_lang_meta_href />@
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
 This plugin *works only* within @section@ into the permlinks preference choice of your website (i.e.: @section/id/title@ or @section/title@ permlinks format).
@@ -67,10 +81,11 @@ h3. Histoy and Changelog
 
 Plugin created for the "FOTO" prenium TXP theme.
 
+* 23 ^td^ November 2017. v 0.1.9.
 * 16 ^th^ November 2017. v 0.1.8.
 * 15 ^th^ November 2017. v. 0.1.7.
 * 14 ^th^ November 2017. v 0.1.6.
 * 13 ^th^ November 2017. v 0.1.5.
-* 12 ^th^ November 2017. v 0.1.3. & v 0.1.4.
-* 11 ^th^ November 2017. v 0.1.2.
+* 12 ^sd^ November 2017. v 0.1.3. & v 0.1.4.
+* 11 ^st^ November 2017. v 0.1.2.
 * 8 ^th^ November 2017. v 0.1.0. & 0.1.1.
