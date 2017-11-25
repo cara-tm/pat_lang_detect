@@ -58,10 +58,12 @@ function pat_lang_detect($atts)
 		$variable['visitor_lang'] = gps('lang');
 
 	// Redirection to locale page or not; otherwise display only the URL
-	if (true != $redirect) {
-		return $display ? hu._pat_lang_detect_section_name($variable['visitor_lang']) : '';
-	} else {
-		header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_lang']));
+	if ( $variable['visitor_lang'] != substr(get_pref('language'), 0, 2) ) {
+		if (true != $redirect) {
+			return $display ? hu._pat_lang_detect_section_name($variable['visitor_lang']) : '';
+		} else {
+			header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_lang']));
+		}
 	}
 
 }
