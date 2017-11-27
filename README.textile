@@ -44,7 +44,7 @@ The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" 
 
 h4. @<txp:pat_lang_default />@
 
-This tag without any attributes returns the current TXP active language set in your interface.
+This tag without any attributes returns the current TXP ISO2 active code language set in your interface.
 
 h3. About redirection
 
