@@ -21,6 +21,9 @@ if (class_exists('\Textpattern\Tag\Registry')) {
 }
 
 
+/**
+ * This plugin lifecycle.
+ */
 if (txpinterface == 'admin')
 {
 	register_callback('pat_lang_detect_prefs', 'prefs', '', 1);
@@ -77,9 +80,7 @@ function pat_lang_detect($atts)
  */
 function pat_lang_default()
 {
-
 	return substr(get_pref('language'), 0, 2);
-
 }
 
 
