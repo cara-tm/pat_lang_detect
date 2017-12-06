@@ -90,6 +90,7 @@ h3. Histoy and Changelog
 
 Plugin created for the "FOTO" prenium TXP theme.
 
+* 6 ^th^ December 2017. v 0.2.
 * 23 ^td^ November 2017. v 0.1.9.
 * 16 ^th^ November 2017. v 0.1.8.
 * 15 ^th^ November 2017. v. 0.1.7.
