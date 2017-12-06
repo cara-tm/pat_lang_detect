@@ -5,7 +5,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.1.9
+ * @version: 0.2
  * @license: GPLv2
  */
 
@@ -51,7 +51,7 @@ function pat_lang_detect($atts)
 	$_SESSION['language'] = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $langs[0]);
 
 	// Create a 'visitor_lang' variable for conveniences, default: prefs lang.
-	if ( !empty($_SESSION['language']) )
+	if (!empty($_SESSION['language']))
 		$variable['visitor_lang'] = $_SESSION['language'];
 	else
 		$variable['visitor_lang'] = substr(get_pref('language'), 0, 2);
@@ -123,8 +123,8 @@ function pat_lang_meta_href()
 	// Query: get all section names
 	$data = safe_rows('name', 'txp_section', "1=1");
 
-	if ( $pretext['s'] == 'default' || (strlen($pretext['s']) == 2 && false != $is_article_list) ) {
-		$out = '<link rel="x-default" hreflang="'.$current.'" href="'.hu.'">'.n;
+	if ($pretext['s'] == 'default' || (strlen($pretext['s']) == 2 && false != $is_article_list)) {
+		$out = '<link rel="alternate" hreflang="x-default" href="'.hu.'">'.n;
 		// Loop for locale sections
 		foreach ($data as $value) {
 			if (strlen($value['name']) == 2 && $value['name'] != $current)
@@ -132,12 +132,12 @@ function pat_lang_meta_href()
 		}
 	} else {
 		// Is there a 'Twin_ID' custom_field for this individual article?
-		if ( custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID')) != article_id(array()) ) {
+		if (custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID')) != article_id(array())) {
 			// Check all in the comma separated list of IDs
-			$list = explode( ',', trim(custom_field(array('name' => 'Twin_ID'))) );
+			$list = explode(',', trim(custom_field(array('name' => 'Twin_ID'))));
 			foreach($list as $id) {
 				// Retrieves the alternate link with the ISO2 section name
-				$out .= _pat_lang_detect_section_grab( permlink(array('id' => $id)) );
+				$out .= _pat_lang_detect_section_grab(permlink(array('id' => $id)));
 			}
 		}
 	}
@@ -156,12 +156,12 @@ function _pat_lang_detect_section_grab($scheme)
 	if ($scheme)
 		preg_match('%\/([a-z]{2})\/%', $scheme, $m);
 
-	if ($m[1] == substr(get_pref('language'), 0, 2) )
-		$rel = 'x-default';
+	if ($m[1] == substr(get_pref('language'), 0, 2))
+		$ref = 'x-default';
 	else
-		$rel = 'alternate';
+		$ref = $m[1];
 
-	return '<link rel="'.$rel.'" hreflang="'.$m[1].'" href="'.$scheme.'">'.n;
+	return '<link rel="alternate" hreflang="'.$ref.'" href="'.$scheme.'">'.n;
 }
 
 
