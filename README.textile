@@ -4,6 +4,8 @@ Textpattern CMS plugin: Simple browser vistor preference language detection for 
 
 This plugin intents to help for multi languages websites support. Detects the language preference of the visitors browser, then redirect to the corresponding page named by the two matching letters (eg. @en@) if it exists.
 
+*Caution*: This plugin may crashing your pages (your <head> part especially) with Adblock Plus utility. See below how to avoid a such as annoying situation. 
+
 h3. Usage
 
 After installation, activate this plugin into your preferences by ticking the "Enable pat_lang_detect?" field. Then, place this tag into your @default@ page template but nothing other else:
@@ -45,6 +47,15 @@ The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" 
 h4. @<txp:pat_lang_default />@
 
 This tag without any attributes returns the current TXP ISO2 active code language set in your interface.
+
+h4. Usage for Adblocks Plus
+
+We noticed the Adblock Plus tool hides the @<head>@ part of a page document if @&lt;txp:pat_lang_detect /&gt;@ tag is present in it (especially within the @<html>@ tag).
+To avoid all problems, here is how to check and retrieve the ISO2 code into the @lang@ attribute:
+
+bq. &lt;html lang="&lt;txp:if_section name=""&gt;&lt;txp:lang /&gt;&lt;txp:else /&gt;&lt;txp:pat_lang_detect /&gt;&lt;txp:variable name="visitor_lang" /&gt;&lt;/txp:if_section&gt;" dir="&lt;txp:text item="lang_dir" /&gt;"&gt;
+
+ie. Is this the "default" page? So, displays the native @&lt;txp:lang /&gt;@ TXP tag; otherwise uses the plugin's tags.
 
 h3. About redirection
 
