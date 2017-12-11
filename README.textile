@@ -4,7 +4,7 @@ Textpattern CMS plugin: Simple browser vistor preference language detection for 
 
 This plugin intents to help for multi languages websites support. Detects the language preference of the visitors browser, then redirect to the corresponding page named by the two matching letters (eg. @en@) if it exists.
 
-*Caution*: This plugin may crashing your pages (your <head> part especially) with Adblock Plus utility. See below how to avoid a such as annoying situation. 
+*Caution*: This plugin may crashing your pages (your @<head>@ part especially) with Adblock Plus utility. See below how to avoid a such as annoying situation. 
 
 h3. Usage
 
