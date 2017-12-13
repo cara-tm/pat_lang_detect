@@ -1,3 +1,4 @@
+<?php
 /**
  * Simple browser visitor preference language detection for locale redirects and other utilities
  *
@@ -5,7 +6,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.2
+ * @version: 0.2.2
  * @license: GPLv2
  */
 
@@ -17,7 +18,8 @@ if (class_exists('\Textpattern\Tag\Registry')) {
 	Txp::get('\Textpattern\Tag\Registry')
 		->register('pat_lang_detect')
 		->register('pat_lang_default')
-		->register('pat_lang_meta_href');
+		->register('pat_lang_meta_href')
+		->register('pat_lang_compare');
 }
 
 
@@ -40,33 +42,32 @@ if (txpinterface == 'admin')
  */
 function pat_lang_detect($atts)
 {
-	global $variable;
+	global $prefs, $variable;
 
 	extract(lAtts(array(
 		'redirect'  => false,
 		'display'   => false,
 	), $atts));
 
-	$langs = explode(",", @$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+	$langs = explode(',', @$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
 	$_SESSION['language'] = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $langs[0]);
 
 	// Create a 'visitor_lang' variable for conveniences, default: prefs lang.
-	if (!empty($_SESSION['language']))
+	if (!empty($_SESSION['language']) && false != $prefs['pat_lang_detect_enable'])
 		$variable['visitor_lang'] = $_SESSION['language'];
 	else
-		$variable['visitor_lang'] = substr(get_pref('language'), 0, 2);
+		$prefs['pat_lang_detect_enable'] ? $variable['visitor_lang'] = substr(get_pref('language'), 0, 2) : '';
 
 	// Change 'visitor_lang' variable by the $_GET value from URLs
-	if ( gps('lang') )
+	if (gps('lang'))
 		$variable['visitor_lang'] = gps('lang');
 
 	// Redirection to locale page or not; otherwise display only the URL
-	if ( $variable['visitor_lang'] != substr(get_pref('language'), 0, 2) ) {
-		if (true != $redirect) {
+	if ($variable['visitor_lang'] != substr(get_pref('language'), 0, 2)) {
+		if (true != $redirect)
 			return $display ? hu._pat_lang_detect_section_name($variable['visitor_lang']) : '';
-		} else {
+		else
 			header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_lang']));
-		}
 	}
 
 }
@@ -85,7 +86,7 @@ function pat_lang_default()
 
 
 /**
- * Compares a variable from names stored into the 'txp_section' table
+ * Compares a variable from names stored into the 'section' table
  *
  * @param  $code string ISO2 language code
  * @return $code string ISO2 language code found in DB
@@ -94,7 +95,7 @@ function _pat_lang_detect_section_name($code)
 {
 	global $DB;
 	$DB = new DB;
-	$rs = safe_row('name', 'txp_section', "name = '".doSlash($code)."'");
+	$rs = safe_field('name', 'txp_section', "name = '".doSlash($code)."'");
 
 	if ($rs)
 		$out = $code;
@@ -118,13 +119,13 @@ function pat_lang_meta_href()
 
 	// ISO2 lang prefs
 	$current = pat_lang_default();
-	// Loads the main function
+	// Loads main function
 	pat_lang_detect(array('redirect' => 0, 'display' => 0));
 	// Query: get all section names
 	$data = safe_rows('name', 'txp_section', "1=1");
 
-	if ($pretext['s'] == 'default' || (strlen($pretext['s']) == 2 && false != $is_article_list)) {
-		$out = '<link rel="alternate" hreflang="x-default" href="'.hu.'">'.n;
+	if ($pretext['s'] == 'default' || (strlen($pretext['s']) == 2 && true == $is_article_list)) {
+		$out .= '<link rel="alternate" hreflang="x-default" href="'.hu.'">'.n;
 		// Loop for locale sections
 		foreach ($data as $value) {
 			if (strlen($value['name']) == 2 && $value['name'] != $current)
@@ -153,6 +154,7 @@ function pat_lang_meta_href()
  */
 function _pat_lang_detect_section_grab($scheme)
 {
+
 	if ($scheme)
 		preg_match('%\/([a-z]{2})\/%', $scheme, $m);
 
@@ -165,19 +167,50 @@ function _pat_lang_detect_section_grab($scheme)
 }
 
 
+/**
+ * Simple comparaison between TXP default language and the visitor one
+ *
+ * @param
+ * @return empty|string Nothing or the visitor language ISO2 code
+*/
+function pat_lang_compare()
+{
+	global $variable;
+
+	if ($variable['visitor_lang'] != pat_lang_default())
+		$out = $variable['visitor_lang'];
+	else
+		$out = '';
+
+	return $out;
+}
+
+
+/**
+ * This plugin preferences
+ *
+ * @param
+ * @return SQL Plugin preference field
+ */
 function pat_lang_detect_prefs()
 {
 	global $textarray;
 
 	$textarray['pat_lang_detect_enable'] = 'Enable pat_lang_detect?';
 
-	if (!safe_field ('name', 'txp_prefs', "name='pat_lang_detect_enable'"))
+	if (!safe_field('name', 'txp_prefs', "name='pat_lang_detect_enable'"))
 	{
 		safe_insert('txp_prefs', "name='pat_lang_detect_enable', val='0', type=1, event='admin', html='yesnoradio', position=30");
 	}
 }
 
 
+/**
+ * This plugin cleanup on deletion
+ *
+ * @param
+ * @return SQL Safe delete field
+ */
 function pat_lang_detect_cleanup()
 {
 	safe_delete('txp_prefs', "name='pat_lang_detect_enable'");

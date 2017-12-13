@@ -48,6 +48,10 @@ h4. @<txp:pat_lang_default />@
 
 This tag without any attributes returns the current TXP ISO2 active code language set in your interface.
 
+h4. @<txp:pat_lang_compare />@
+
+A simple comparaison tag between the TXP default language and the visitor one. Can be use into breadcrumb links to redirect to the home page version translated into the visitor language. 
+
 h4. Usage for Adblocks Plus
 
 We noticed the Adblock Plus tool hides the @<head>@ part of a page document if @&lt;txp:pat_lang_detect /&gt;@ tag is present in it (especially within the @<html>@ tag).
@@ -101,6 +105,7 @@ h3. Histoy and Changelog
 
 Plugin created for the "FOTO" prenium TXP theme.
 
+13 ^th^ December 2017. v 0.2.1 & 0.2.2.
 * 6 ^th^ December 2017. v 0.2.
 * 23 ^td^ November 2017. v 0.1.9.
 * 16 ^th^ November 2017. v 0.1.8.
