@@ -6,7 +6,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.2.2
+ * @version: 0.2.3
  * @license: GPLv2
  */
 
@@ -42,12 +42,14 @@ if (txpinterface == 'admin')
  */
 function pat_lang_detect($atts)
 {
-	global $prefs, $variable;
+	global $prefs, $pretext, $variable;
 
 	extract(lAtts(array(
 		'redirect'  => false,
 		'display'   => false,
 	), $atts));
+
+	_pat_lang_detect_start_session();
 
 	$langs = explode(',', @$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
 	$_SESSION['language'] = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $langs[0]);
@@ -62,6 +64,10 @@ function pat_lang_detect($atts)
 	if (gps('lang'))
 		$variable['visitor_lang'] = gps('lang');
 
+	// Overwrite 'visitor_lang' variable within a 2 letters section name (ISO2 code)
+	if (strlen($pretext['s']) == 2)
+		$variable['visitor_lang'] = $pretext['s'];
+
 	// Redirection to locale page or not; otherwise display only the URL
 	if ($variable['visitor_lang'] != substr(get_pref('language'), 0, 2)) {
 		if (true != $redirect)
@@ -70,6 +76,29 @@ function pat_lang_detect($atts)
 			header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_lang']));
 	}
 
+}
+
+
+/**
+ * Session function
+ *
+ * @param
+ * @return boolean
+ */
+function _pat_lang_detect_start_session()
+{
+	if (headers_sent()) {
+		if (!isset($_SESSION)) {
+			$_SESSION = array();
+		}
+		return false;
+	} elseif (!isset($_SESSION)) {
+		session_cache_limiter("must-revalidate");
+		session_start();
+		return true;
+	} else {
+		return true;
+	}
 }
 
 
@@ -215,3 +244,4 @@ function pat_lang_detect_cleanup()
 {
 	safe_delete('txp_prefs', "name='pat_lang_detect_enable'");
 }
+

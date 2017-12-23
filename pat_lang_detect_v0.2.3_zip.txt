@@ -1,0 +1,61 @@
+# Name: pat_lang_detect v0.2.3 (compressed)
+# Type: Admin/Public plugin
+# Simple browser visitor preference language detection for locale redirects and other utilities
+# Author: Patrick LEFEVRE
+# URL: https://github.com/cara-tm/
+# Recommended load order: 5
+
+# .....................................................................
+# This is a plugin for Textpattern CMS - http://textpattern.com/
+# To install: textpattern > admin > plugins
+# Paste the following text into the 'Install plugin' box:
+# .....................................................................
+
+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
+HQAA
