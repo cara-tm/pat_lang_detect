@@ -6,7 +6,7 @@
  * @type:    Public
  * @prefs:   no
  * @order:   5
- * @version: 0.2.3
+ * @version: 0.2.4
  * @license: GPLv2
  */
 
@@ -19,7 +19,8 @@ if (class_exists('\Textpattern\Tag\Registry')) {
 		->register('pat_lang_detect')
 		->register('pat_lang_default')
 		->register('pat_lang_meta_href')
-		->register('pat_lang_compare');
+		->register('pat_lang_compare')
+		->register('pat_lang_detect_link');
 }
 
 
@@ -38,7 +39,7 @@ if (txpinterface == 'admin')
  * Part of this code based on Robert Wetzlmayr's script.
  *
  * @param  $atts array This plugin attributes
- * @return string      ISO2 language code
+ * @return string      Redirect or link
  */
 function pat_lang_detect($atts)
 {
@@ -49,67 +50,46 @@ function pat_lang_detect($atts)
 		'display'   => false,
 	), $atts));
 
-	_pat_lang_detect_start_session();
-
 	$langs = explode(',', @$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-	$_SESSION['language'] = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $langs[0]);
 
 	// Create a 'visitor_lang' variable for conveniences, default: prefs lang.
-	if (!empty($_SESSION['language']) && false != $prefs['pat_lang_detect_enable'])
-		$variable['visitor_lang'] = $_SESSION['language'];
-	else
-		$prefs['pat_lang_detect_enable'] ? $variable['visitor_lang'] = substr(get_pref('language'), 0, 2) : '';
+	if (false != $prefs['pat_lang_detect_enable']) {
+		$variable['visitor_iso'] = strtolower($langs[0]);
+		$variable['visitor_lang'] = preg_replace('/(?:(?<=([a-z]{2}))).*/', '', $langs[0]);
+	} else {
+		$variable['visitor_lang'] = $prefs['pat_lang_detect_enable'] ? substr(get_pref('language'), 0, 2) : '';
+	}
 
 	// Change 'visitor_lang' variable by the $_GET value from URLs
 	if (gps('lang'))
 		$variable['visitor_lang'] = gps('lang');
 
-	// Overwrite 'visitor_lang' variable within a 2 letters section name (ISO2 code)
-	if (strlen($pretext['s']) == 2)
-		$variable['visitor_lang'] = $pretext['s'];
+	// Overwrite variables within a locale section name (ISO code)
+	if (preg_match('/^[a-z]{2}(\-[a-zA-Z]{2})?$/', $pretext['s'])) {
+		$variable['visitor_lang'] = substr($pretext['s'], 0, 2);
+		$variable['visitor_iso'] = $pretext['s'];
+	}
 
 	// Redirection to locale page or not; otherwise display only the URL
-	if ($variable['visitor_lang'] != substr(get_pref('language'), 0, 2)) {
+	if ($variable['visitor_iso'] != get_pref('language')) {
 		if (true != $redirect)
-			return $display ? hu._pat_lang_detect_section_name($variable['visitor_lang']) : '';
+			return $display ? hu._pat_lang_detect_section_name($variable['visitor_iso']) : '';
 		else
-			header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_lang']));
+			header('Location: '.hu._pat_lang_detect_section_name($variable['visitor_iso']));
 	}
 
 }
 
 
 /**
- * Session function
- *
- * @param
- * @return boolean
- */
-function _pat_lang_detect_start_session()
-{
-	if (headers_sent()) {
-		if (!isset($_SESSION)) {
-			$_SESSION = array();
-		}
-		return false;
-	} elseif (!isset($_SESSION)) {
-		session_cache_limiter("must-revalidate");
-		session_start();
-		return true;
-	} else {
-		return true;
-	}
-}
-
-
-/**
- * A simple helper tag to get the ISO2 code of the default TXP language
+ * A simple helper tag to get the ISO code of the default TXP language
  *
  * @param
  * @return string ISO2 code
  */
 function pat_lang_default()
 {
+
 	return substr(get_pref('language'), 0, 2);
 }
 
@@ -117,19 +97,21 @@ function pat_lang_default()
 /**
  * Compares a variable from names stored into the 'section' table
  *
- * @param  $code string ISO2 language code
- * @return $code string ISO2 language code found in DB
+ * @param  $code string ISO language code
+ * @return $code string ISO language code found in DB
  */
 function _pat_lang_detect_section_name($code)
 {
 	global $DB;
 	$DB = new DB;
-	$rs = safe_field('name', 'txp_section', "name = '".doSlash($code)."'");
+
+	$out = false;
+
+	if (preg_match('/^[a-z]{2}(\-[a-zA-Z]{2})?$/', $code))
+		$rs = safe_field('name', 'txp_section', "name = '".doSlash($code)."'");
 
 	if ($rs)
 		$out = $code;
-	else
-		$out = '';
 
 	return $out;
 }
@@ -146,23 +128,23 @@ function pat_lang_meta_href()
 	global $pretext, $is_article_list;
 	$out = '';
 
-	// ISO2 lang prefs
-	$current = pat_lang_default();
+	// ISO lang prefs
+	$current = get_pref('language');
 	// Loads main function
 	pat_lang_detect(array('redirect' => 0, 'display' => 0));
 	// Query: get all section names
-	$data = safe_rows('name', 'txp_section', "1=1");
+	$data = safe_rows('name', 'txp_section', "1=1 AND CHAR_LENGTH(name) < 6");
 
-	if ($pretext['s'] == 'default' || (strlen($pretext['s']) == 2 && true == $is_article_list)) {
+	if ($pretext['s'] == 'default' or (false != _pat_lang_detect_section_name($pretext['s']) and true == $is_article_list)) {
 		$out .= '<link rel="alternate" hreflang="x-default" href="'.hu.'">'.n;
 		// Loop for locale sections
 		foreach ($data as $value) {
-			if (strlen($value['name']) == 2 && $value['name'] != $current)
+			if (preg_match('/^[a-z]{2}(\-[a-zA-Z]{2})?$/', $value['name']) && $value['name'] != $current)
 				$out .= '<link rel="alternate" hreflang="'.$value['name'].'" href="'.pagelinkurl(array('s' => $value['name'])).'">'.n;	
 		}
 	} else {
 		// Is there a 'Twin_ID' custom_field for this individual article?
-		if (custom_field(array('name' => 'Twin_ID')) && custom_field(array('name' => 'Twin_ID')) != article_id(array())) {
+		if (custom_field(array('name' => 'Twin_ID')) and custom_field(array('name' => 'Twin_ID')) != article_id(array())) {
 			// Check all in the comma separated list of IDs
 			$list = explode(',', trim(custom_field(array('name' => 'Twin_ID'))));
 			foreach($list as $id) {
@@ -185,9 +167,9 @@ function _pat_lang_detect_section_grab($scheme)
 {
 
 	if ($scheme)
-		preg_match('%\/([a-z]{2})\/%', $scheme, $m);
+		preg_match('%\/([a-z]{2})(\-[a-zA-Z]{2})?\/%', $scheme, $m);
 
-	if ($m[1] == substr(get_pref('language'), 0, 2))
+	if ($m[1] == get_pref('language'))
 		$ref = 'x-default';
 	else
 		$ref = $m[1];
@@ -212,6 +194,37 @@ function pat_lang_compare()
 		$out = '';
 
 	return $out;
+}
+
+
+/**
+ * Generate a link to locale sections
+ *
+ * @param $label string   The label of the link
+ * @param $section string The section (ISO code)
+ * @return string         HTML link
+*/
+function pat_lang_detect_link($atts)
+{
+
+	global $variable;
+
+	extract(lAtts(array(
+		'label'       => false,
+		'section'     => false,
+	), $atts));
+
+	if ($label && $section) {
+		if ($variable['visitor_lang'] !== pat_lang_default())
+			$out = '<p><span><a href="'.hu.$section.'">'.$label.'</a></span></p>';
+		else
+			$out = '';
+	} else {
+		$out = '';
+	}
+
+	return $out;
+
 }
 
 
@@ -244,4 +257,3 @@ function pat_lang_detect_cleanup()
 {
 	safe_delete('txp_prefs', "name='pat_lang_detect_enable'");
 }
-

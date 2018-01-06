@@ -2,15 +2,13 @@ h1. @<txp:pat_lang_detect />@
 
 Textpattern CMS plugin: Simple browser vistor preference language detection for locale redirects and other utilities.
 
-This plugin intents to help for multi languages websites support. Detects the language preference of the visitors browser, then redirect to the corresponding page named by the two matching letters (eg. @en@) if it exists.
-
-*Caution*: This plugin may crashing your pages (your @<head>@ part especially) with Adblock Plus utility. See below how to avoid a such as annoying situation. 
+This plugin intents to help for multi languages websites support. Detects the language preference of the visitors browser, then can redirect to the corresponding page named by the two matching letters (eg. @en@) if it exists or display a link to the matching section (support default locale section with this other compagnon plugin: pat_text). 
 
 h3. Usage
 
 After installation, activate this plugin into your preferences by ticking the "Enable pat_lang_detect?" field. Then, place this tag into your @default@ page template but nothing other else:
 
-* @<txp:pat_lang_detect redirect="1" />@
+* @<txp:pat_lang_detect redirect="1" display="0" />@
 
 And... _Voilà!_
 
@@ -40,21 +38,30 @@ So, you can overwriting the visitor language in your links by a new one into you
 
     @http://my-website.com/?lang=fr@
 
-h3. TXP variable: @<txp:variable name="visitor_lang" />@
+h3. TXP variables: @<txp:variable name="visitor_lang" />@ and @<txp:variable name="visitor_iso" />@
 
-The plugin also creates a TXP variable named @<txp:variable name="visitor_lang" />@ which contains the locale code country (ISO2) of your visitors and available for any conveniences throught your entire website.
+The plugin also creates TXP variables named @<txp:variable name="visitor_lang" />@ which contains the locale code country (ISO 639-1 format) of your visitors and available for any conveniences throught your entire website and @<txp:variable name="visitor_iso" />@ which contains language and country codes (ISO 639-1 followed by ISO 3166-1 Alpha 2 formats).
 
 h4. @<txp:pat_lang_default />@
 
 This tag without any attributes returns the current TXP ISO2 active code language set in your interface.
 
-h4. @<txp:pat_lang_compare />@
+h3. @<txp:pat_lang_compare />@
 
-A simple comparaison tag between the TXP default language and the visitor one. Can be use into breadcrumb links to redirect to the home page version translated into the visitor language. 
+A simple comparaison tag between the TXP default language and the visitor one. Can be use into breadcrumb links to redirect to the home page version translated into the visitor language.
 
-h4. Usage for Adblocks Plus
+h3. @<txp:pat_lang_detect_link />@
 
-We noticed the Adblock Plus tool hides the @<head>@ part of a page document if @&lt;txp:pat_lang_detect /&gt;@ tag is present in it (especially within the @<html>@ tag).
+This tag can create an HTML link to locale sections.
+
+h4. Attributes
+
+* @label@ (string) required: the text for the link. Default: empty.
+* @section@ (string) required: the section name. Default: empty.
+
+h3. Usage for Adblocks Plus
+
+We noticed the Adblock Plus tool sometimes hides the @<head>@ part of a page document if @&lt;txp:pat_lang_detect /&gt;@ tag is present in it (especially within the @<html>@ tag).
 To avoid all problems, here is how to check and retrieve the ISO2 code into the @lang@ attribute:
 
 bq. &lt;html lang="&lt;txp:if_section name=""&gt;&lt;txp:lang /&gt;&lt;txp:else /&gt;&lt;txp:pat_lang_detect /&gt;&lt;txp:variable name="visitor_lang" /&gt;&lt;/txp:if_section&gt;" dir="&lt;txp:text item="lang_dir" /&gt;"&gt;
@@ -79,7 +86,11 @@ p{width:100%;text-align:right;font-size:small}. _Above: A french website sample_
 h3. @<txp:pat_lang_meta_href />@
 
 This tag, without any attributes, is dedicated to your @<head>@ document part in order to add the alternate links to each locale pages of your website. This practice intents to get good spots for your SEO efforts.
-This plugin *works only* within @section@ into the permlinks preference choice of your website (i.e.: @section/id/title@ or @section/title@ permlinks format).
+This plugin *works only* within @section@ into the permlinks preference choice of your website (i.e.: @section/id/title@ or @section/title@ permlinks format). 
+
+You will need to create your locale sections (i.e. @en@ or @en-us@) and attach them to your @default@ page template.
+
+Note: This plugin can identify section names with only 2 letters and/or with 2 letters followed by an hyphen and 2 other letters. 
 
 h4. Usage
 
@@ -87,7 +98,7 @@ Place this tag into the @<head>@ part of your HTML document:
 
 bq. &lt;txp:pat_lang_meta_href /&gt;
 
-This tag checks all your locale sections available (named by 2 letters in ISO2 format) and injects all alternate links accordingly, e.g. (this case for an english site):
+This tag checks all your locale sections available (named by 2 letters in ISO2 format and/or 4 letters with an hyphen separator) and injects all alternate links accordingly, e.g. (this case for an english site):
 
 bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.com/"&gt;
 &lt;link rel="alternate" hreflang="de" href="http&#8202;://example.com/de"&gt;
@@ -97,14 +108,17 @@ bq. &lt;link rel="alternate" hreflang="x-default" href="http&#8202;://example.co
 Note: @x-default@ value if a *default section* is found same as the website default @active language@ sets in the languages preferences.
 Alternative links are displayed in default order as populated into the 'section' table; individual alternative links are displayed in the order of the corresponding article #IDs.
 
+Tested successfully with the online "http://flang.dejanseo.com.au/":http://flang.dejanseo.com.au/ tool.
+
 h2. Custom field: @<txp:custom_field name="Twin_ID" />@
 
-For individual alternate href links, use a custom field named @Twin_ID@ to store a comma separated list of IDs of the corresponding translated articles (the current locale one, included). The alternate links will be generated automaticaly in an individual article context.
+For individual alternate href links, use a custom field named @Twin_ID@ to store a comma separated list of IDs of the corresponding translated articles (the current locale one, included). The alternate @hreflang@ links will be generated automaticaly in an individual article context.
  
 h3. Histoy and Changelog
 
 Plugin created for the "FOTO" prenium TXP theme.
 
+* 24 ^th^ December 2017. v 0.2.4.
 * 23 ^rd^ December 2017. v 0.2.3.
 * 13 ^th^ December 2017. v 0.2.1 & 0.2.2.
 * 6 ^th^ December 2017. v 0.2.
